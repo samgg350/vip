@@ -1,0 +1,5 @@
+ultralytics
+opencv-python
+numpy
+requests==2.34.2
+urllib3==2.7.0
