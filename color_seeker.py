@@ -9,7 +9,7 @@ import urllib3
 urllib3.disable_warnings()   # phonesense uses a self-signed HTTPS certificate
 
 # ===================== CONFIGURATION =====================
-ARDUINO_IP = "192.168.1.217"   # same IP you use in drive_control.py
+from config import ARDUINO_IP  # edit config.py
 CMD_PORT   = 5005              # your udp_command_receiver.ino uses 5005
 
 # Camera source. Pick ONE:
@@ -17,7 +17,7 @@ CMD_PORT   = 5005              # your udp_command_receiver.ino uses 5005
 #   PHONE_URL = "http://192.168.x.x:8080/video"              # Android IP Webcam
 #   PHONE_URL = "http://192.168.x.x:8080/live"               # iPhone Simple IP Camera
 #   PHONE_URL = 0                                            # laptop webcam (testing)
-PHONE_URL = "https://192.168.1.190:8080/camera/stream"
+from config import STREAM_URL as PHONE_URL  # edit config.py
 
 # Motor pins on the SnappyXO shield
 LEFT_IN1,  LEFT_IN2,  LEFT_PWM  = 4, 5, 6      # MOTOR #1

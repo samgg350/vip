@@ -1,7 +1,7 @@
 import socket
 import tkinter as tk
 
-ARDUINO_IP = "192.168.1.217"   # <-- put your Arduino IP here
+from config import ARDUINO_IP  # edit config.py
 ARDUINO_PORT = 5005
 
 # Servo pin

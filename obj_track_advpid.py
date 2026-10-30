@@ -1,3 +1,4 @@
+import os
 import cv2
 import socket
 import numpy as np
@@ -15,12 +16,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # iPhone (Simple IP Camera): "http://192.168.x.x:8080/live"
 # phonesense:                "https://192.168.x.x:8080/camera/stream"
 # Laptop webcam (testing):   0
-STREAM_URL = "https://192.168.1.190:8080/camera/stream"
+from config import STREAM_URL  # edit config.py
 
 # Robot. Same values as drive_control.py / color_seeker.py.
-ARDUINO_IP = "192.168.1.217"
+from config import ARDUINO_IP  # edit config.py
 CMD_PORT = 5005               # udp_command_receiver.ino listens on 5005
-ROBOT_ENABLED = False         # False = detection only, no packets sent
+ROBOT_ENABLED = True          # False = detection only, no packets sent
 
 # Motor pins on the SnappyXO shield (sent inside each "M" command)
 LEFT_IN1, LEFT_IN2, LEFT_PWM = 4, 5, 6       # MOTOR #1
@@ -28,12 +29,15 @@ RIGHT_IN1, RIGHT_IN2, RIGHT_PWM = 12, 13, 11  # MOTOR #2
 LEFT_DIR = 1                  # set to -1 if the left wheel spins backwards
 RIGHT_DIR = 1                 # set to -1 if the right wheel spins backwards
 
-# Path to your trained model from Exercise A (train_lime.py makes best.pt)
-MODEL_PATH = "best.pt"
-# Only track these class names. None = any class in the model.
-# No best.pt yet? Use MODEL_PATH = "yolo26n.pt" and
-# TARGET_CLASSES = ["sports ball", "orange", "apple"]
-TARGET_CLASSES = None
+# Path to your trained model from Exercise A (train_lime.py makes best.pt).
+# If best.pt does not exist yet, the pretrained yolo26n.pt is used instead
+# and only tracks balls / oranges / apples.
+if os.path.exists("best.pt"):
+    MODEL_PATH = "best.pt"
+    TARGET_CLASSES = None     # None = any class in the model
+else:
+    MODEL_PATH = "yolo26n.pt"
+    TARGET_CLASSES = ["sports ball", "orange", "apple"]
 
 # Only show detections above this confidence level (0.0 to 1.0)
 CONFIDENCE = 0.4
@@ -199,6 +203,7 @@ def findbest(results, names):
 
 def main():
     print("Loading model...")
+    print(f"Using {MODEL_PATH}, tracking: {TARGET_CLASSES or 'any class'}")
     model = YOLO(MODEL_PATH)
     print("Model loaded. Classes:", model.names)
     print("Robot:", f"{ARDUINO_IP}:{CMD_PORT}" if ROBOT_ENABLED else "DISABLED (detection only)")

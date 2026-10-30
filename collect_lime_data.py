@@ -20,7 +20,7 @@ urllib3.disable_warnings()
 
 # -- CONFIGURATION ----------------------------------------------------
 # Same as STREAM_URL in obj_track_advpid.py (0 = laptop webcam)
-STREAM_URL = "https://192.168.1.190:8080/camera/stream"
+from config import STREAM_URL  # edit config.py
 DATASET_DIR = "dataset"
 CLASS_NAME = "lime"
 SAVE_INTERVAL = 0.3   # seconds between auto-saved images

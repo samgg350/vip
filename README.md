@@ -31,7 +31,7 @@ pip install -r requirements.txt
 python check_deps.py
 ```
 
-1. **Camera.** Start the phone stream, open its URL in a browser, then paste it into `STREAM_URL` in **both** `collect_lime_data.py` and `obj_track_advpid.py`. To use the laptop webcam instead, set `STREAM_URL = 0`.
+1. **Settings.** Put your phone IP (shown in phonesense) and Arduino IP (Serial Monitor) in `config.py`. Every script reads them from there.
 2. **Collect data (about 5 min).**
    ```bash
    python collect_lime_data.py
@@ -42,14 +42,14 @@ python check_deps.py
    python train_lime.py
    ```
    This produces `best.pt`.
-4. **Test detection only.** `ROBOT_ENABLED = False` is already set.
+4. **Test detection.** Set `ROBOT_ENABLED = False` in `obj_track_advpid.py` to test without the robot moving.
    ```bash
    python obj_track_advpid.py
    ```
    Check that a box follows the lime. The `err` value should be negative when the lime is on the left and positive when it is on the right.
-5. **Robot.** Set `ROBOT_ENABLED = True` and `ARDUINO_IP`, keep `SPEED = 0`, and check that the robot turns toward the lime. If a wheel spins the wrong way, flip `LEFT_DIR` or `RIGHT_DIR`. Then raise `SPEED` to about 200.
+5. **Robot.** `ROBOT_ENABLED = True` is set. Keep `SPEED = 0`, and check that the robot turns toward the lime. If a wheel spins the wrong way, flip `LEFT_DIR` or `RIGHT_DIR`. Then raise `SPEED` to about 200.
 
-**Short on time?** Skip steps 2–3: set `MODEL_PATH = "yolo26n.pt"` and `TARGET_CLASSES = ["sports ball", "orange", "apple"]`. The pretrained COCO model may detect the lime as one of these classes.
+**No `best.pt` yet?** The tracker automatically uses the pretrained `yolo26n.pt` and tracks a ball, orange or apple instead.
 
 ## Notes
 
