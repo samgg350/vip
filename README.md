@@ -31,7 +31,7 @@ pip install -r requirements.txt
 python check_deps.py
 ```
 
-1. **Settings.** Put your phone IP (shown in phonesense) and Arduino IP (Serial Monitor) in `config.py`. Every script reads them from there.
+1. **Settings.** Put your Arduino IP (Serial Monitor) in `config.py`. Start phonesense in a terminal and scan its QR code with the iPhone; the stream URL (`https://127.0.0.1:8080/camera/stream`) is already set.
 2. **Collect data (about 5 min).**
    ```bash
    python collect_lime_data.py
